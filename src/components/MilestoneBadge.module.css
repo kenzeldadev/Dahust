@@ -1,0 +1,13 @@
+/* Locked and unlocked milestone styling. Teaches: SVG dash progress and state classes. */
+.badge { display: flex; align-items: center; gap: .85rem; width: 100%; text-align: left; color: var(--text) }
+.ring { position: relative; width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center }
+.ring svg { position: absolute; inset: 0; transform: rotate(-90deg) }
+.ring circle { fill: none; stroke-width: 4 }
+.track { stroke: var(--border) }
+.progress { stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset .3s }
+.ring span { font-size: .72rem; font-weight: 800 }
+.badge strong { flex: 1 }
+.badge small { color: var(--muted); white-space: nowrap }
+.unlocked { border-color: var(--gold); box-shadow: inset 0 0 18px rgba(255, 201, 60, .08); color: var(--gold) }
+.locked { filter: grayscale(.75); color: var(--muted) }
+.locked .progress { stroke: var(--muted) }

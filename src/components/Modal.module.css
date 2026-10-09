@@ -1,0 +1,28 @@
+/* Dialog presentation and entrance animation. Teaches: CSS module keyframes. */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgba(3, 7, 18, .78);
+    animation: fade .18s ease both
+}
+.dialog {
+    width: min(100%, 680px);
+    max-height: min(90vh, 900px);
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 24px 90px rgba(0, 0, 0, .55);
+    animation: enter .2s ease both
+}
+.header { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: var(--surface); border-bottom: 1px solid var(--border); z-index: 1 }
+.header h2 { font-size: 1.1rem }
+.close { width: 2rem; height: 2rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); color: var(--text); font-size: 1.4rem; line-height: 1 }
+.body { padding: 1.25rem }
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes enter { from { opacity: 0; transform: scale(.95) } to { opacity: 1; transform: scale(1) } }
+@media (prefers-reduced-motion: reduce) { .overlay, .dialog { animation-duration: .01ms } }

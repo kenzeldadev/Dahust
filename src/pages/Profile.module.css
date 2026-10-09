@@ -1,0 +1,11 @@
+/* Profile section layout and action tiles. Teaches: responsive CSS grids. */
+.section { margin-top: 2rem }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem }
+.heading .section-title { margin-bottom: 1rem }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem }
+.addCard { display: grid; min-height: 82px; place-content: center; justify-items: center; gap: .25rem; border-style: dashed; background: transparent; color: var(--cyan); font-weight: 700; font-size: 1.4rem }
+.addCard span { font-size: .85rem }
+.empty { color: var(--muted); padding: 0 0 1rem }
+.textLink { color: var(--cyan); font-size: .85rem; text-decoration: none; margin-bottom: 1rem }
+.textLink:hover { text-decoration: underline }
+.milestone { border-color: var(--gold); color: var(--gold) }

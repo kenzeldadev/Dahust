@@ -1,0 +1,12 @@
+/* Responsive quest list row. Teaches: flexible layout and state styles. */
+.row { display: flex; align-items: center; gap: .8rem; margin-bottom: .55rem; padding: .8rem 1rem }
+.check { display: grid; place-items: center }
+.check input { width: 1.05rem; height: 1.05rem; accent-color: var(--cyan) }
+.title { flex: 1; min-width: 100px }
+.done { color: var(--muted); text-decoration: line-through }
+.skill { font-size: .85rem }
+.pill { border: 1px solid var(--border); background: var(--surface-2); border-radius: 99px; padding: .2rem .65rem; font-size: .75rem }
+.xp { color: var(--gold); white-space: nowrap; font-size: .85rem }
+.delete { display: grid; place-items: center; border: 0; background: none; color: var(--muted); padding: .25rem }
+.delete:hover { color: var(--red) }
+@media (max-width: 640px) { .row { flex-wrap: wrap } .title { flex-basis: calc(100% - 3rem) } .skill { margin-left: 1.8rem } }

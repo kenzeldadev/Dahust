@@ -1,0 +1,24 @@
+/* Scrollable glowing life-stage timeline. Teaches: horizontal overflow and state styling. */
+.timelineCard { margin-top: 1rem }
+.heading { display: flex; align-items: start; justify-content: space-between; gap: 1rem }
+.heading p, .empty { color: var(--muted); font-size: .85rem }
+.add { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--border); border-radius: 8px; padding: .45rem .65rem; background: var(--surface-2); color: var(--cyan); white-space: nowrap }
+.scroller { overflow-x: auto; padding: 1.3rem .25rem .5rem; scrollbar-color: var(--border) transparent }
+.track { display: flex; width: max-content; min-width: 100%; align-items: start }
+.stage { position: relative; width: 180px; flex: 0 0 180px; padding-top: 1px }
+.stage:not(:last-child)::after { content: ''; position: absolute; top: 12px; left: 50%; right: -50%; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--border)); box-shadow: 0 0 8px rgba(34, 211, 238, .35) }
+.node { position: relative; z-index: 1; display: grid; justify-items: center; gap: .3rem; width: 100%; border: 0; background: none; color: var(--muted); text-align: center }
+.dot { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--surface-2); border: 2px solid var(--border); color: var(--muted); font-size: .65rem; font-weight: 800 }
+.node strong { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text) }
+.node small { font-size: .75rem }
+.edit { display: inline-flex; align-items: center; gap: .2rem; font-size: .7rem; opacity: 0; color: var(--cyan); transition: opacity .2s }
+.node:hover .edit, .node:focus-visible .edit { opacity: 1 }
+.current .dot { background: var(--cyan); border-color: var(--cyan); color: var(--bg); box-shadow: 0 0 16px var(--cyan) }
+.current .node strong { color: var(--cyan) }
+.past { opacity: .48 }
+.delete { display: block; margin: .4rem auto 0; border: 0; background: none; color: var(--muted); padding: .2rem }
+.delete:hover { color: var(--red) }
+.empty { padding: .5rem 0 }
+.form { display: grid; gap: .8rem }
+.form label { display: grid; gap: .4rem; color: var(--muted); font-size: .85rem }
+@media (max-width: 560px) { .heading { align-items: start } .stage { width: 145px; flex-basis: 145px } }

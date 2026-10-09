@@ -1,0 +1,8 @@
+/* Short-lived full-screen celebration. Teaches: vanilla CSS animation. */
+.flash { position: fixed; inset: 0; z-index: 900; display: grid; place-items: center; pointer-events: none; background: rgba(255, 201, 60, .12); animation: flash 1.5s ease both }
+.content { display: flex; flex-direction: column; align-items: center; gap: .25rem; color: var(--gold); text-shadow: 0 0 35px rgba(255, 201, 60, .75); animation: scaleUp 1.5s cubic-bezier(.2,.8,.2,1) both }
+.content span { letter-spacing: .35em; font-size: .85rem; font-weight: 800 }
+.content strong { font-size: clamp(4rem, 16vw, 9rem); line-height: 1 }
+@keyframes flash { 0%, 100% { opacity: 0 } 10%, 45% { opacity: 1 } }
+@keyframes scaleUp { 0% { opacity: 0; transform: scale(.4) } 18% { opacity: 1; transform: scale(1.08) } 35%, 75% { opacity: 1; transform: scale(1) } 100% { opacity: 0; transform: scale(1.15) } }
+@media (prefers-reduced-motion: reduce) { .flash, .content { animation-duration: .01ms } }

@@ -1,0 +1,7 @@
+/* Portfolio tile with optional image preview. Teaches: visual component composition. */
+.badge { display: flex; flex-direction: column; gap: .65rem; text-align: left; color: var(--text) }
+.image, .noImage { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; background: var(--surface-2) }
+.noImage { display: grid; place-items: center; color: var(--gold); font-size: 2.5rem }
+.title { font-weight: 700 }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; color: var(--muted); font-size: .75rem }
+.meta i { margin-left: auto; color: var(--cyan); font-style: normal }

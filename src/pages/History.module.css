@@ -1,0 +1,25 @@
+/* Quest timeline and detail presentation. Teaches: visual timelines with pseudo-elements. */
+.empty { display: grid; justify-items: start; gap: 1rem; color: var(--muted); padding: 2rem 0 }
+.filters { display: flex; align-items: end; gap: .7rem; flex-wrap: wrap; margin-bottom: 1.1rem }
+.filters label { display: grid; gap: .3rem; color: var(--muted); font-size: .72rem }
+.filters select { min-width: 145px }
+.range { display: flex; gap: .2rem; border: 1px solid var(--border); border-radius: 9px; padding: .2rem; background: var(--surface) }
+.range button { border: 0; border-radius: 6px; padding: .4rem .55rem; background: transparent; color: var(--muted); font-size: .75rem; white-space: nowrap }
+.range .activeRange { background: var(--surface-2); color: var(--cyan) }
+.timeline { position: relative; display: grid; gap: .75rem; padding: .25rem 0 .25rem 1.25rem }
+.timeline::before { content: ''; position: absolute; top: 1rem; bottom: 1rem; left: .45rem; width: 2px; background: var(--border) }
+.group { display: grid; gap: .65rem }
+.dateHeading { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; margin: .5rem 0 0 }
+.entry { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; color: var(--text); text-align: left }
+.dot { position: absolute; top: 1.15rem; left: -.96rem; z-index: 1; width: .7rem; height: .7rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold) }
+.card { display: grid; gap: .65rem; padding: 1rem 1.15rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); transition: border-color .2s, transform .2s }
+.entry:hover .card { border-color: var(--cyan); transform: translateX(3px) }
+.top, .meta { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap }
+.top strong { flex: 1 }
+.top b, .reward { color: var(--gold) }
+.meta { color: var(--muted); font-size: .8rem }
+.meta i { font-style: normal }
+.meta em { border: 1px solid var(--border); border-radius: 99px; padding: .12rem .55rem; font-style: normal }
+.meta time { margin-left: auto }
+.detail { display: grid; gap: .8rem; line-height: 1.55 }
+.detail p { color: var(--muted) }

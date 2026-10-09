@@ -1,0 +1,29 @@
+.wrap {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    z-index: 100
+}
+
+.toast {
+    background: var(--surface-2);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: .75rem 1rem;
+    animation: in .3s ease
+}
+
+@keyframes in {
+    from {
+        transform: translateX(120%);
+        opacity: 0
+    }
+
+    to {
+        transform: none;
+        opacity: 1
+    }
+}

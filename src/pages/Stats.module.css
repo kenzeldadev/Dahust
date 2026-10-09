@@ -1,0 +1,38 @@
+/* Analytics layout and chart primitives. Teaches: data visualization with CSS and SVG. */
+.page { display: grid; gap: 1rem }
+.intro { color: var(--muted); margin-top: -.45rem }
+.empty { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding: 1rem; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px }
+.statGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem }
+.stat { display: grid; gap: .55rem }
+.stat span { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em }
+.stat strong { color: var(--gold); font-size: clamp(1.2rem, 3vw, 1.8rem) }
+.chartCard { min-width: 0 }
+.bars { height: 200px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .65rem; align-items: end }
+.barColumn { display: grid; grid-template-rows: 1.2rem 1fr 1.2rem; justify-items: center; align-items: end; gap: .35rem; height: 100% }
+.barColumn strong { color: var(--gold); font-size: .7rem; align-self: end }
+.barColumn small { color: var(--muted); font-size: .72rem }
+.barTrack { align-self: stretch; width: min(100%, 34px); display: flex; align-items: end; border-radius: 5px; background: var(--surface-2); overflow: hidden }
+.bar { width: 100%; min-height: 0; background: var(--gold); border-radius: 5px 5px 0 0; transition: height .3s }
+.chartGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem }
+.radar { display: block; width: min(100%, 360px); height: 260px; margin: 0 auto }
+.radarHeading { display: grid; gap: .2rem }
+.radarToggle { display: flex; flex-wrap: wrap; gap: .25rem; margin: -.55rem 0 .35rem }
+.radarToggle button { border: 1px solid var(--border); border-radius: 6px; padding: .25rem .45rem; background: var(--surface-2); color: var(--muted); font-size: .68rem }
+.radarToggle .selectedToggle { border-color: var(--cyan); color: var(--cyan) }
+.axisLabel { fill: var(--muted); font-size: 9px }
+.chartHint { text-align: center; color: var(--muted); font-size: .78rem }
+.chartEmpty { min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; color: var(--muted); text-align: center }
+.chartEmpty a { color: var(--cyan) }
+.donutWrap { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap }
+.donut { width: min(100%, 220px); height: auto }
+.donutTotal { fill: var(--text); font-size: 22px; font-weight: 800 }
+.donutLabel { fill: var(--muted); font-size: 9px; letter-spacing: 1px }
+.legend { display: grid; gap: .55rem; list-style: none; min-width: 130px; color: var(--muted); font-size: .78rem }
+.legend li { display: flex; align-items: center; gap: .5rem }
+.legend i, .heatLegend i { width: .65rem; height: .65rem; flex: 0 0 .65rem; border-radius: 2px }
+.legend b { margin-left: auto; color: var(--text) }
+.heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 1fr); grid-template-columns: repeat(12, 1fr); gap: 4px; width: min(100%, 640px) }
+.heatmap span { aspect-ratio: 1; border-radius: 3px }
+.heatLegend { display: flex; align-items: center; gap: .35rem; margin-top: .75rem; color: var(--muted); font-size: .7rem }
+.heatLegend span:last-child { margin-left: .15rem }
+@media (max-width: 740px) { .statGrid { grid-template-columns: repeat(2, 1fr) } .chartGrid { grid-template-columns: 1fr } }

@@ -1,0 +1,3 @@
+/* Profile skill tile. Teaches: scoped component styling. */
+.card { display: flex; align-items: center; gap: .75rem; border-top: 3px solid; color: var(--text); text-decoration: none }
+.icon { width: 2.5rem; height: 2.5rem; border-radius: 10px; display: grid; place-items: center }
