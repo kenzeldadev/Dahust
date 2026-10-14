@@ -37,4 +37,10 @@
 .historyEntry b { color: var(--gold); white-space: nowrap }
 .targetForm { display: grid; gap: .9rem }
 .targetForm label { display: grid; gap: .4rem; color: var(--muted); font-size: .85rem }
-@media (max-width: 520px) { .hero { align-items: start; flex-wrap: wrap } .heroInfo { flex-basis: calc(100% - 5rem) } }
+@media (max-width: 520px) {
+    .hero { align-items: start; flex-wrap: wrap }
+    .heroInfo { flex-basis: calc(100% - 5rem) }
+    .historyEntry { align-items: flex-start; flex-wrap: wrap; gap: .5rem }
+    .historyEntry b { white-space: normal }
+    .targetLabel { align-items: flex-start; flex-wrap: wrap }
+}

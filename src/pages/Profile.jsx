@@ -17,6 +17,7 @@ export default function Profile() {
     const { skills, quests, milestones, rules } = state;
     const [modal, setModal] = useState(null);
     const today = quests.filter(quest => isSameDay(quest.createdAt, new Date()) || (quest.completedAt && isSameDay(quest.completedAt, new Date())));
+    const makeUp = quests.filter(quest => !quest.completed && quest.missedAt);
     const recent = milestones.filter(milestone => milestone.unlocked).sort((a, b) => b.unlockedAt.localeCompare(a.unlockedAt)).slice(0, 5);
     const skillOf = id => skills.find(skill => skill.id === id);
     return <>
@@ -36,6 +37,13 @@ export default function Profile() {
                 onToggle={() => dispatch({ type: quest.completed ? 'UNCOMPLETE_QUEST' : 'COMPLETE_QUEST', id: quest.id })}
                 onDelete={() => dispatch({ type: 'DELETE_QUEST', id: quest.id })} />)}
         </section>
+        {!!makeUp.length && <section className={s.section}>
+            <div className={s.heading}><h2 className="section-title">Missed Quests · Make-up</h2><Link className={s.textLink} to="/history">View history</Link></div>
+            <p className={s.empty}>Missed a step? These quests are still yours to complete.</p>
+            {makeUp.map(quest => <QuestRow key={quest.id} quest={quest} skill={skillOf(quest.skillId)}
+                onToggle={() => dispatch({ type: 'COMPLETE_QUEST', id: quest.id })}
+                onDelete={() => dispatch({ type: 'DELETE_QUEST', id: quest.id })} />)}
+        </section>}
         <section className={s.section}>
             <div className={s.heading}><h2 className="section-title">Recent Milestones</h2><Link className={s.textLink} to="/achievements">View all</Link></div>
             {!recent.length && <p className={s.empty}>Complete your first quest to unlock a milestone.</p>}

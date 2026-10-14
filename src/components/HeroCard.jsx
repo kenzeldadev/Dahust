@@ -14,9 +14,10 @@ export default function HeroCard() {
   const lv = levelFromXp(user.totalXp, rules), pct = progressPercent(user.totalXp, rules);
   const onFile = e => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => dispatch({ type: 'UPDATE_USER', payload: { avatar: r.result } }); r.readAsDataURL(f) };
   return <section className={`card ${s.hero}`}>
-    <div className={s.avatar} onClick={() => file.current.click()} style={user.avatar ? { backgroundImage: `url(${user.avatar})` } : {}}>
+    <button type="button" className={s.avatar} aria-label="Change hero avatar" onClick={() => file.current.click()} style={user.avatar ? { backgroundImage: `url(${user.avatar})` } : {}}>
       {!user.avatar && user.name[0]?.toUpperCase()}<span className={s.lv}>LV {lv}</span>
-      <input ref={file} type="file" accept="image/*" hidden onChange={onFile} /></div>
+    </button>
+    <input ref={file} type="file" accept="image/*" hidden onChange={onFile} />
     <div className={s.info}>
       <Editable className={s.name} value={user.name} onSave={name => dispatch({ type: 'UPDATE_USER', payload: { name } })} />
       <Editable className={s.sub} value={user.subtitle} onSave={subtitle => dispatch({ type: 'UPDATE_USER', payload: { subtitle } })} />

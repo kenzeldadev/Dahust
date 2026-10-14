@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useGame from '../hooks/useGame.js';
+import { isCompletedHistoryEntry } from '../utils/history.js';
 import { isSameDay } from '../utils/dates.js';
 import s from './Stats.module.css';
 
@@ -50,7 +51,8 @@ function Donut({ slices, total }) {
 
 export default function Stats() {
     const { state } = useGame();
-    const { history, skills, user } = state;
+    const { skills, user } = state;
+    const history = state.history.filter(isCompletedHistoryEntry);
     const [radarRange, setRadarRange] = useState('today');
     const now = new Date();
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());

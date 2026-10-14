@@ -5,6 +5,7 @@ import { ArrowLeft, Target } from 'lucide-react';
 import Modal from '../components/Modal.jsx';
 import QuestRow from '../components/QuestRow.jsx';
 import useGame from '../hooks/useGame.js';
+import { isCompletedHistoryEntry } from '../utils/history.js';
 import { levelFromXp, progressPercent, xpIntoCurrentLevel, xpNeededForLevel } from '../utils/xp.js';
 import s from './SkillDetail.module.css';
 
@@ -20,13 +21,14 @@ export default function SkillDetail() {
     const [target, setTarget] = useState({ quests: skill?.monthlyTarget?.quests ?? 20, xp: skill?.monthlyTarget?.xp ?? 500 });
     const now = new Date();
     const allHistory = state.history.filter(entry => entry.skillId === id).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    const monthHistory = allHistory.filter(entry => monthKey(new Date(entry.timestamp)) === monthKey(now));
+    const completedHistory = allHistory.filter(isCompletedHistoryEntry);
+    const monthHistory = completedHistory.filter(entry => monthKey(new Date(entry.timestamp)) === monthKey(now));
     const quests = state.quests.filter(quest => quest.skillId === id);
-    const totalXp = allHistory.reduce((sum, entry) => sum + entry.xp, 0);
+    const totalXp = completedHistory.reduce((sum, entry) => sum + entry.xp, 0);
     const level = levelFromXp(totalXp, state.rules);
     const chartData = Array.from({ length: 30 }, (_, index) => {
         const date = addDays(now, index - 29), key = dateKey(date);
-        return { key, day: date.getDate(), xp: allHistory.filter(entry => dateKey(new Date(entry.timestamp)) === key).reduce((sum, entry) => sum + entry.xp, 0) }
+        return { key, day: date.getDate(), xp: completedHistory.filter(entry => dateKey(new Date(entry.timestamp)) === key).reduce((sum, entry) => sum + entry.xp, 0) }
     });
     const maxDailyXp = Math.max(1, ...chartData.map(item => item.xp));
     const daysThisMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
@@ -46,7 +48,7 @@ export default function SkillDetail() {
         <Link to="/skills" className={s.back}><ArrowLeft size={16} /> All Skills</Link>
         <header className={`card ${s.hero}`} style={{ borderLeftColor: skill.color }}>
             <span className={s.icon} style={{ color: skill.color, background: `${skill.color}20` }}><Target size={30} /></span>
-            <div className={s.heroInfo}><h1>{skill.name}</h1><p>Level {level} · {totalXp.toLocaleString()} total XP · {allHistory.length} quests completed</p>
+            <div className={s.heroInfo}><h1>{skill.name}</h1><p>Level {level} · {totalXp.toLocaleString()} total XP · {completedHistory.length} quests completed</p>
                 <div className={s.progress}><span style={{ width: `${progressPercent(totalXp, state.rules)}%`, background: skill.color }} /></div>
                 <small>{level >= state.rules.maxLevel ? 'MAX LEVEL' : `${xpIntoCurrentLevel(totalXp, state.rules)} / ${xpNeededForLevel(level, state.rules)} XP to next level`}</small>
             </div><strong className={s.level}>LV {level}</strong>
@@ -71,7 +73,7 @@ export default function SkillDetail() {
         <section>
             <h2 className="section-title">History</h2>
             {!allHistory.length ? <p className={s.empty}>Complete a quest to start building skill history.</p> :
-                <div className={s.history}>{allHistory.map(entry => <article className={`card ${s.historyEntry}`} key={entry.id}><span><strong>{entry.title}</strong><small>{new Date(entry.timestamp).toLocaleDateString()} · {entry.difficulty}</small></span><b>+{entry.xp} XP</b></article>)}</div>}
+                <div className={s.history}>{allHistory.map(entry => <article className={`card ${s.historyEntry}`} key={entry.id}><span><strong>{entry.title}</strong><small>{new Date(entry.timestamp).toLocaleDateString()} · {entry.difficulty}</small></span><b>{entry.status === 'missed' ? 'Missed · make-up available' : `+${entry.xp} XP`}</b></article>)}</div>}
         </section>
         {editTarget && <Modal title="Edit Monthly Target" onClose={() => setEditTarget(false)}>
             <form className={s.targetForm} onSubmit={saveTarget}>

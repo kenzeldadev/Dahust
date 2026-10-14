@@ -38,6 +38,22 @@ export function GameProvider({ children }) {
     const [state, reducerDispatch] = useReducer(gameReducer, saved, migrateState);
     const dispatch = reducerDispatch;
     useEffect(() => setSaved(state), [state, setSaved]);
+    useEffect(() => {
+        let timer;
+        let active = true;
+        const recordMissedQuests = () => {
+            if (!active) return;
+            dispatch({ type: 'RECORD_MISSED_QUESTS' });
+            const now = new Date();
+            const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            timer = setTimeout(recordMissedQuests, nextDay.getTime() - now.getTime());
+        };
+        recordMissedQuests();
+        return () => {
+            active = false;
+            clearTimeout(timer);
+        }
+    }, [dispatch]);
     const [toasts, setToasts] = useState([]);
     const [levelUp, setLevelUp] = useState(null);
     const toast = useCallback(msg => { const id = Date.now() + Math.random(); setToasts(t => [...t, { id, msg }]); setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 3000) }, []);

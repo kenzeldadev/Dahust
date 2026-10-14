@@ -17,7 +17,7 @@ const dayLabel = value => {
 const localDayStart = date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 export default function History() {
-    const { state } = useGame();
+    const { state, dispatch } = useGame();
     const [selected, setSelected] = useState(null);
     const [skillFilter, setSkillFilter] = useState('all');
     const [difficultyFilter, setDifficultyFilter] = useState('all');
@@ -64,18 +64,21 @@ export default function History() {
                 return <button key={entry.id} type="button" className={s.entry} onClick={() => setSelected(entry)}>
                     <span className={s.dot} />
                     <span className={s.card}>
-                        <span className={s.top}><strong>{entry.title}</strong><b>+{entry.xp} XP</b></span>
+                        <span className={s.top}><strong>{entry.title}</strong><b className={entry.status === 'missed' ? s.missedStatus : ''}>{entry.status === 'missed' ? 'Missed · Make-up available' : `+${entry.xp} XP`}</b></span>
                         <span className={s.meta}><i style={{ color: skill?.color || 'var(--muted)' }}>{skillName}</i><em>{entry.difficulty}</em><time>{relativeTime(entry.timestamp)}</time></span>
                     </span>
                 </button>
             })}</section>)}</div>}
         {selected && <Modal title={selected.title} onClose={() => setSelected(null)}>
             <div className={s.detail}>
-                <p>{selected.description || 'Quest completed and added to your journey.'}</p>
+                <p>{selected.description || (selected.status === 'missed' ? 'This quest was missed, but you can still make it up.' : 'Quest completed and added to your journey.')}</p>
                 <p><strong>Skill:</strong> {selected.skillId ? skillOf(selected.skillId)?.name || 'Unknown skill' : 'No skill'}</p>
                 <p><strong>Difficulty:</strong> {selected.difficulty}</p>
-                <p><strong>Completed:</strong> {new Date(selected.timestamp).toLocaleString()}</p>
-                <strong className={s.reward}>+{selected.xp} XP</strong>
+                <p><strong>{selected.status === 'missed' ? 'Missed on:' : 'Completed:'}</strong> {new Date(selected.timestamp).toLocaleString()}</p>
+                {selected.status === 'missed' ? state.quests.some(quest => quest.id === selected.questId && !quest.completed) ?
+                    <button className="btn" type="button" onClick={() => { dispatch({ type: 'COMPLETE_QUEST', id: selected.questId }); setSelected(null) }}>Make up this quest</button> :
+                    <strong className={s.reward}>This quest is no longer available.</strong> :
+                    <strong className={s.reward}>+{selected.xp} XP</strong>}
             </div>
         </Modal>}
     </section>

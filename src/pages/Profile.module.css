@@ -1,6 +1,6 @@
 /* Profile section layout and action tiles. Teaches: responsive CSS grids. */
 .section { margin-top: 2rem }
-.heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-width: 0 }
 .heading .section-title { margin-bottom: 1rem }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem }
 .addCard { display: grid; min-height: 82px; place-content: center; justify-items: center; gap: .25rem; border-style: dashed; background: transparent; color: var(--cyan); font-weight: 700; font-size: 1.4rem }
@@ -9,3 +9,10 @@
 .textLink { color: var(--cyan); font-size: .85rem; text-decoration: none; margin-bottom: 1rem }
 .textLink:hover { text-decoration: underline }
 .milestone { border-color: var(--gold); color: var(--gold) }
+
+@media (max-width: 480px) {
+    .heading { align-items: flex-start; flex-wrap: wrap }
+    .heading .section-title { flex: 1 1 auto }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 145px), 1fr)); gap: .7rem }
+    .section { margin-top: 1.5rem }
+}

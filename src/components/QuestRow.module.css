@@ -1,5 +1,7 @@
 /* Responsive quest list row. Teaches: flexible layout and state styles. */
-.row { display: flex; align-items: center; gap: .8rem; margin-bottom: .55rem; padding: .8rem 1rem }
+.row { display: flex; align-items: center; gap: .8rem; margin-bottom: .55rem; padding: .8rem 1rem; min-width: 0 }
+.missed { border-color: rgba(251, 146, 60, .55) }
+.makeup { color: var(--orange); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em }
 .check { display: grid; place-items: center }
 .check input { width: 1.05rem; height: 1.05rem; accent-color: var(--cyan) }
 .title { flex: 1; min-width: 100px }
@@ -9,4 +11,18 @@
 .xp { color: var(--gold); white-space: nowrap; font-size: .85rem }
 .delete { display: grid; place-items: center; border: 0; background: none; color: var(--muted); padding: .25rem }
 .delete:hover { color: var(--red) }
-@media (max-width: 640px) { .row { flex-wrap: wrap } .title { flex-basis: calc(100% - 3rem) } .skill { margin-left: 1.8rem } }
+@media (max-width: 640px) {
+    .row { flex-wrap: wrap; gap: .55rem .7rem; padding: .8rem }
+    .title { flex-basis: calc(100% - 2.5rem); min-width: 0 }
+    .skill { margin-left: 1.7rem; flex: 1 1 auto }
+    .makeup { margin-left: 1.7rem }
+    .pill { margin-left: 1.7rem }
+    .xp { margin-left: auto }
+    .delete { margin-left: auto }
+}
+
+@media (max-width: 380px) {
+    .row { gap: .5rem }
+    .skill { font-size: .78rem }
+    .pill { padding: .18rem .5rem }
+}

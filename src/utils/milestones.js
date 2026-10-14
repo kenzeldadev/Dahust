@@ -1,18 +1,19 @@
 // Computes display progress without changing milestone unlock rules. Teaches: derived state.
 import { levelFromXp } from './xp.js';
+import { isCompletedHistoryEntry } from './history.js';
 
 export function milestoneProgress(milestone, state) {
     const data = {
-        first_blood: [state.history.length, 1],
+        first_blood: [state.history.filter(isCompletedHistoryEntry).length, 1],
         streak7: [state.user.bestStreak, 7],
         streak30: [state.user.bestStreak, 30],
         xp1000: [state.user.totalXp, 1000],
         lv10: [levelFromXp(state.user.totalXp, state.rules), 10],
         lv25: [levelFromXp(state.user.totalXp, state.rules), 25],
         lv50: [levelFromXp(state.user.totalXp, state.rules), 50],
-        q100: [state.history.length, 100],
-        q500: [state.history.length, 500],
-        legend: [state.history.some(entry => entry.difficulty === 'Legendary') ? 1 : 0, 1],
+        q100: [state.history.filter(isCompletedHistoryEntry).length, 100],
+        q500: [state.history.filter(isCompletedHistoryEntry).length, 500],
+        legend: [state.history.some(entry => isCompletedHistoryEntry(entry) && entry.difficulty === 'Legendary') ? 1 : 0, 1],
         skills5: [state.skills.length, 5],
         port10: [state.portfolio.length, 10]
     }[milestone.key] || [0, 1];

@@ -6,6 +6,7 @@ import Modal from '../components/Modal.jsx';
 import AddSkillForm from '../components/AddSkillForm.jsx';
 import { SKILL_ICONS } from '../components/AddSkillForm.jsx';
 import useGame from '../hooks/useGame.js';
+import { isCompletedHistoryEntry } from '../utils/history.js';
 import { levelFromXp, progressPercent, xpIntoCurrentLevel, xpNeededForLevel } from '../utils/xp.js';
 import s from './Skills.module.css';
 
@@ -25,8 +26,9 @@ export default function Skills() {
         <div className={s.heading}><div><h1 className="section-title">Skills</h1><p className={s.intro}>Build experience by completing quests assigned to each skill.</p></div></div>
         {!state.skills.length ? <div className={s.empty}><p>No skills yet. Add your first skill to start tracking progress.</p><button className="btn" type="button" onClick={() => setModalOpen(true)}>＋ Add Skill</button></div> :
             <div className={s.list}>{state.skills.map(skill => {
-                const xp = state.history.filter(entry => entry.skillId === skill.id).reduce((total, entry) => total + entry.xp, 0);
-                const count = state.history.filter(entry => entry.skillId === skill.id).length;
+                const skillHistory = state.history.filter(entry => isCompletedHistoryEntry(entry) && entry.skillId === skill.id);
+                const xp = skillHistory.reduce((total, entry) => total + entry.xp, 0);
+                const count = skillHistory.length;
                 const level = levelFromXp(xp, state.rules);
                 const Icon = SKILL_ICONS[skill.icon] || SKILL_ICONS.Star;
                 return <article key={skill.id} className={`card ${s.skill}`} style={{ borderLeftColor: skill.color }}>

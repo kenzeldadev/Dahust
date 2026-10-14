@@ -2,6 +2,7 @@
 import { newId } from '../utils/id.js';
 import { isSameDay, daysBetween } from '../utils/dates.js';
 import { levelFromXp } from '../utils/xp.js';
+import { isCompletedHistoryEntry } from '../utils/history.js';
 
 const monthKey = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 const defaultTarget = () => ({ quests: 20, xp: 500, month: monthKey(new Date()) });
@@ -11,16 +12,16 @@ const notice = (s, type, title, description, icon) => ({
 });
 
 export const MILESTONE_DEFS = [
-  ['first_blood', 'First Blood', 'Complete your first quest', s => s.history.length >= 1],
+  ['first_blood', 'First Blood', 'Complete your first quest', s => s.history.filter(isCompletedHistoryEntry).length >= 1],
   ['streak7', '7-Day Streak', 'Reach a 7-day streak', s => s.user.bestStreak >= 7],
   ['streak30', '30-Day Streak', 'Reach a 30-day streak', s => s.user.bestStreak >= 30],
   ['xp1000', 'First 1,000 XP', 'Earn 1,000 total XP', s => s.user.totalXp >= 1000],
   ['lv10', 'Reach Level 10', 'Reach level 10', s => levelFromXp(s.user.totalXp, s.rules) >= 10],
   ['lv25', 'Reach Level 25', 'Reach level 25', s => levelFromXp(s.user.totalXp, s.rules) >= 25],
   ['lv50', 'Reach Level 50', 'Reach level 50', s => levelFromXp(s.user.totalXp, s.rules) >= 50],
-  ['q100', '100 Quests', 'Complete 100 quests', s => s.history.length >= 100],
-  ['q500', '500 Quests', 'Complete 500 quests', s => s.history.length >= 500],
-  ['legend', 'Legendary Slayer', 'Complete a Legendary quest', s => s.history.some(h => h.difficulty === 'Legendary')],
+  ['q100', '100 Quests', 'Complete 100 quests', s => s.history.filter(isCompletedHistoryEntry).length >= 100],
+  ['q500', '500 Quests', 'Complete 500 quests', s => s.history.filter(isCompletedHistoryEntry).length >= 500],
+  ['legend', 'Legendary Slayer', 'Complete a Legendary quest', s => s.history.some(h => isCompletedHistoryEntry(h) && h.difficulty === 'Legendary')],
   ['skills5', 'Skill Collector', 'Create 5 skills', s => s.skills.length >= 5],
   ['port10', 'Portfolio Master', 'Add 10 portfolio entries', s => s.portfolio.length >= 10]];
 // Conditions are functions (not JSON-safe), so they live here and milestones in state store only the key.
@@ -36,11 +37,11 @@ export const makeInitialState = () => ({
 function rewardConditionMet(reward, s) {
   const value = Number(reward.conditionValue);
   switch (reward.conditionType) {
-    case 'quests_completed_total': return s.history.length >= value;
-    case 'quests_completed_today': return s.history.filter(entry => isSameDay(entry.timestamp, new Date())).length >= value;
+    case 'quests_completed_total': return s.history.filter(isCompletedHistoryEntry).length >= value;
+    case 'quests_completed_today': return s.history.filter(entry => isCompletedHistoryEntry(entry) && isSameDay(entry.timestamp, new Date())).length >= value;
     case 'streak_days': return s.user.streak >= value;
     case 'skill_level': return s.skills.some(skill => {
-      const xp = s.history.filter(entry => entry.skillId === skill.id).reduce((sum, entry) => sum + entry.xp, 0);
+      const xp = s.history.filter(entry => isCompletedHistoryEntry(entry) && entry.skillId === skill.id).reduce((sum, entry) => sum + entry.xp, 0);
       return levelFromXp(xp, s.rules) >= value
     });
     case 'xp_total': return s.user.totalXp >= value;
@@ -78,6 +79,30 @@ function reduce(s, a) {
     case 'DELETE_LIFE_STAGE': return { ...s, user: { ...s.user, lifeStages: (s.user.lifeStages || []).filter(stage => stage.id !== a.id) } };
     case 'ADD_QUEST': return { ...s, quests: [...s.quests, { id: newId(), ...a.payload, xp: s.rules.difficultyXp[a.payload.difficulty], completed: false, completedAt: null, createdAt: new Date().toISOString() }] };
     case 'DELETE_QUEST': return { ...s, quests: s.quests.filter(q => q.id !== a.id) };
+    case 'RECORD_MISSED_QUESTS': {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const missed = s.quests.filter(q => !q.completed && new Date(q.createdAt) < today &&
+        !s.history.some(entry => entry.questId === q.id && entry.status === 'missed'));
+      if (!missed.length) return s;
+      const entries = missed.map(q => {
+        const missedOn = new Date(q.createdAt);
+        missedOn.setDate(missedOn.getDate() + 1);
+        missedOn.setHours(0, 0, 0, 0);
+        return {
+          id: newId(), questId: q.id, title: q.title, difficulty: q.difficulty,
+          xp: 0, skillId: q.skillId, timestamp: missedOn.toISOString(),
+          description: 'This quest was missed. It is still available to make up.',
+          status: 'missed'
+        }
+      });
+      const missedIds = new Set(missed.map(q => q.id));
+      return {
+        ...s,
+        quests: s.quests.map(q => missedIds.has(q.id) ? { ...q, missedAt: entries.find(entry => entry.questId === q.id).timestamp } : q),
+        history: [...entries, ...s.history]
+      }
+    }
     case 'COMPLETE_QUEST': {
       const q = s.quests.find(x => x.id === a.id); if (!q || q.completed) return s;
       const now = new Date().toISOString(), u = s.user;
@@ -92,12 +117,12 @@ function reduce(s, a) {
       next = {
         ...next,
         quests: next.quests.map(x => x.id === q.id ? { ...x, completed: true, completedAt: now } : x),
-        history: [{ id: newId(), questId: q.id, title: q.title, difficulty: q.difficulty, xp: q.xp, skillId: q.skillId, timestamp: now, description: '' }, ...next.history],
+        history: [{ id: newId(), questId: q.id, title: q.title, difficulty: q.difficulty, xp: q.xp, skillId: q.skillId, timestamp: now, description: '', status: 'completed' }, ...next.history],
         user: { ...u, totalXp: u.totalXp + q.xp, streak, bestStreak: Math.max(u.bestStreak, streak), daysActive: days, lastActiveDate: now }
       };
       const skill = next.skills.find(item => item.id === q.skillId);
       if (skill?.monthlyTarget?.month === monthKey(new Date(now))) {
-        const entries = next.history.filter(entry => entry.skillId === skill.id && monthKey(new Date(entry.timestamp)) === skill.monthlyTarget.month);
+        const entries = next.history.filter(entry => isCompletedHistoryEntry(entry) && entry.skillId === skill.id && monthKey(new Date(entry.timestamp)) === skill.monthlyTarget.month);
         const previousEntries = entries.filter(entry => entry.questId !== q.id);
         const target = skill.monthlyTarget;
         const justMetQuests = target.quests > 0 && previousEntries.length < target.quests && entries.length >= target.quests;
@@ -113,7 +138,7 @@ function reduce(s, a) {
       // Streak/days aren't rewound (can't know prior state); XP and history are.
       return {
         ...s, quests: s.quests.map(x => x.id === q.id ? { ...x, completed: false, completedAt: null } : x),
-        history: s.history.filter(h => h.questId !== q.id), user: { ...s.user, totalXp: Math.max(0, s.user.totalXp - q.xp) }
+        history: s.history.filter(h => h.questId !== q.id || h.status === 'missed'), user: { ...s.user, totalXp: Math.max(0, s.user.totalXp - q.xp) }
       }
     }
     case 'ADD_PORTFOLIO_ENTRY': return { ...s, portfolio: [{ id: newId(), ...a.payload }, ...s.portfolio] };

@@ -2,7 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    gap: 1rem;
+    padding: .9rem clamp(.85rem, 3vw, 2rem);
     border-bottom: 1px solid var(--border);
     background: rgba(10, 14, 26, .8);
     position: sticky;
@@ -62,3 +63,38 @@
     color: var(--muted)
 }
 .tools { display: flex; align-items: center; gap: .65rem }
+
+@media (max-width: 760px) {
+    .nav {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: .7rem 1rem;
+        padding-bottom: .65rem
+    }
+
+    .links {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        gap: clamp(.85rem, 5vw, 1.5rem);
+        overflow-x: auto;
+        padding: .15rem 0 .35rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) transparent
+    }
+
+    .link {
+        flex: 0 0 auto;
+        font-size: .9rem
+    }
+}
+
+@media (max-width: 380px) {
+    .logo {
+        font-size: .9rem;
+        letter-spacing: .14em
+    }
+
+    .links {
+        gap: .9rem
+    }
+}
