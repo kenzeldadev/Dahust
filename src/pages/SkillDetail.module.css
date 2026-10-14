@@ -1,46 +1,208 @@
 /* Skill detail progression and monthly goal visuals. Teaches: derived status and chart layout. */
-.page { display: grid; gap: 1.25rem }
-.back { display: inline-flex; align-items: center; gap: .35rem; color: var(--cyan); text-decoration: none }
-.hero { display: flex; align-items: center; gap: 1rem; border-left: 4px solid }
-.icon { width: 4rem; height: 4rem; flex: 0 0 4rem; display: grid; place-items: center; border-radius: 14px }
-.heroInfo { flex: 1; min-width: 0; display: grid; gap: .4rem }
-.heroInfo h1 { font-size: 1.5rem }
-.heroInfo p, .heroInfo small, .targetHeading p { color: var(--muted); font-size: .82rem }
-.progress, .targetBar { height: 8px; overflow: hidden; border-radius: 99px; background: var(--surface-2) }
-.progress span, .targetBar span { display: block; height: 100%; border-radius: inherit }
-.level { color: var(--gold); border: 1px solid var(--gold); border-radius: 8px; padding: .4rem .6rem }
-.targets { display: grid; gap: 1.15rem }
-.targetHeading, .targetLabel { display: flex; align-items: center; justify-content: space-between; gap: .8rem }
-.targetHeading p { margin-top: -.65rem }
-.edit { border: 1px solid var(--border); border-radius: 8px; padding: .45rem .7rem; background: var(--surface-2); color: var(--cyan) }
-.targetRow { display: grid; gap: .45rem }
-.targetLabel { font-size: .85rem }
-.targetLabel strong { color: var(--text) }
-.targetLabel span { font-weight: 700 }
-.onTrack { color: var(--green) !important }
-.behind { color: var(--orange) !important }
-.exceeded { color: var(--gold) !important }
-.targetBar span.onTrack { background: var(--green) }
-.targetBar span.behind { background: var(--orange) }
-.targetBar span.exceeded { background: var(--gold) }
-.chartCard { min-width: 0 }
-.chart { height: 170px; display: grid; grid-template-columns: repeat(30, minmax(3px, 1fr)); gap: 3px; align-items: end; padding-top: .8rem; border-bottom: 1px solid var(--border) }
-.barColumn { height: 100%; min-width: 0; display: flex; flex-direction: column; justify-content: end; align-items: center; position: relative }
-.bar { width: 100%; min-height: 0; border-radius: 3px 3px 0 0; opacity: .9 }
-.barColumn small { position: absolute; bottom: -1.25rem; color: var(--muted); font-size: .58rem }
-.empty, .notFound { color: var(--muted); padding: .5rem 0 }
-.empty a, .notFound a { color: var(--cyan) }
-.history { display: grid; gap: .5rem }
-.historyEntry { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1rem }
-.historyEntry span { display: grid; gap: .25rem }
-.historyEntry small { color: var(--muted); font-size: .75rem }
-.historyEntry b { color: var(--gold); white-space: nowrap }
-.targetForm { display: grid; gap: .9rem }
-.targetForm label { display: grid; gap: .4rem; color: var(--muted); font-size: .85rem }
+.page {
+  display: grid;
+  gap: 1.25rem;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--cyan);
+  text-decoration: none;
+}
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-left: 4px solid;
+}
+.icon {
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+}
+.heroInfo {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.heroInfo h1 {
+  font-size: 1.5rem;
+}
+.heroInfo p,
+.heroInfo small,
+.targetHeading p {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.progress,
+.targetBar {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--surface-2);
+}
+.progress span,
+.targetBar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+.level {
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+}
+.targets {
+  display: grid;
+  gap: 1.15rem;
+}
+.targetHeading,
+.targetLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+.targetHeading p {
+  margin-top: -0.65rem;
+}
+.edit {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  background: var(--surface-2);
+  color: var(--cyan);
+}
+.targetRow {
+  display: grid;
+  gap: 0.45rem;
+}
+.targetLabel {
+  font-size: 0.85rem;
+}
+.targetLabel strong {
+  color: var(--text);
+}
+.targetLabel span {
+  font-weight: 700;
+}
+.onTrack {
+  color: var(--green) !important;
+}
+.behind {
+  color: var(--orange) !important;
+}
+.exceeded {
+  color: var(--gold) !important;
+}
+.targetBar span.onTrack {
+  background: var(--green);
+}
+.targetBar span.behind {
+  background: var(--orange);
+}
+.targetBar span.exceeded {
+  background: var(--gold);
+}
+.chartCard {
+  min-width: 0;
+}
+.chart {
+  height: 170px;
+  display: grid;
+  grid-template-columns: repeat(30, minmax(3px, 1fr));
+  gap: 3px;
+  align-items: end;
+  padding-top: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.barColumn {
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  position: relative;
+}
+.bar {
+  width: 100%;
+  min-height: 0;
+  border-radius: 3px 3px 0 0;
+  opacity: 0.9;
+}
+.barColumn small {
+  position: absolute;
+  bottom: -1.25rem;
+  color: var(--muted);
+  font-size: 0.58rem;
+}
+.empty,
+.notFound {
+  color: var(--muted);
+  padding: 0.5rem 0;
+}
+.empty a,
+.notFound a {
+  color: var(--cyan);
+}
+.history {
+  display: grid;
+  gap: 0.5rem;
+}
+.historyEntry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+}
+.historyEntry span {
+  display: grid;
+  gap: 0.25rem;
+}
+.historyEntry small {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.historyEntry b {
+  color: var(--gold);
+  white-space: nowrap;
+}
+.targetForm {
+  display: grid;
+  gap: 0.9rem;
+}
+.targetForm label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
 @media (max-width: 520px) {
-    .hero { align-items: start; flex-wrap: wrap }
-    .heroInfo { flex-basis: calc(100% - 5rem) }
-    .historyEntry { align-items: flex-start; flex-wrap: wrap; gap: .5rem }
-    .historyEntry b { white-space: normal }
-    .targetLabel { align-items: flex-start; flex-wrap: wrap }
+  .hero {
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .heroInfo {
+    flex-basis: calc(100% - 5rem);
+  }
+  .historyEntry {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .historyEntry b {
+    white-space: normal;
+  }
+  .targetLabel {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
 }

@@ -1,28 +1,170 @@
 /* Sliding notification drawer and reward celebration. Teaches: fixed overlays and transitions. */
-.bell { position: relative; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border: 0; background: none; color: var(--muted) }
-.bell:hover { color: var(--gold) }
-.count { position: absolute; top: -2px; right: -4px; min-width: 17px; height: 17px; display: grid; place-items: center; padding: 0 4px; border-radius: 99px; background: var(--red); color: white; font-size: .65rem; font-weight: 800 }
-.drawerLayer { position: fixed; inset: 0; z-index: 700 }
-.scrim { position: absolute; inset: 0; width: 100%; border: 0; background: rgba(3, 7, 18, .55) }
-.drawer { position: absolute; top: 0; right: 0; bottom: 0; display: flex; flex-direction: column; width: min(320px, 92vw); background: var(--surface); border-left: 1px solid var(--border); box-shadow: -18px 0 50px rgba(0, 0, 0, .35); animation: slideIn .22s ease both }
-.header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem; border-bottom: 1px solid var(--border) }
-.header h2 { font-size: 1rem }
-.header span { color: var(--muted); font-size: .75rem }
-.header button { display: grid; place-items: center; background: none; border: 0; color: var(--muted); padding: .4rem }
-.toolbar { display: flex; justify-content: space-between; padding: .55rem 1rem; border-bottom: 1px solid var(--border) }
-.toolbar button { border: 0; background: none; color: var(--cyan); font-size: .72rem }
-.list { flex: 1; overflow-y: auto }
-.item { display: flex; gap: .7rem; width: 100%; padding: .9rem 1rem; border: 0; border-bottom: 1px solid var(--border); background: transparent; color: var(--text); text-align: left }
-.item:hover { background: var(--surface-2) }
-.unread { background: rgba(34, 211, 238, .06) }
-.itemIcon { color: var(--gold); padding-top: .1rem }
-.itemText { display: grid; gap: .3rem; min-width: 0 }
-.itemText strong { font-size: .83rem }
-.itemText span, .itemText time { color: var(--muted); font-size: .72rem; line-height: 1.4 }
-.empty { padding: 1rem; color: var(--muted); font-size: .85rem }
-.rewardPopup { display: grid; justify-items: center; text-align: center; gap: 1rem; padding: .75rem }
-.rewardPopup>span { display: grid; place-items: center; width: 4rem; height: 4rem; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); box-shadow: 0 0 24px rgba(255, 201, 60, .25) }
-.rewardPopup h3 { color: var(--gold); font-size: 1.4rem }
-.rewardPopup p { color: var(--muted); line-height: 1.5 }
-@keyframes slideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
-@media (prefers-reduced-motion: reduce) { .drawer { animation-duration: .01ms } }
+.bell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+}
+.bell:hover {
+  color: var(--gold);
+}
+.count {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+  border-radius: 99px;
+  background: var(--red);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+.drawerLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: rgba(3, 7, 18, 0.55);
+}
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(320px, 92vw);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: -18px 0 50px rgba(0, 0, 0, 0.35);
+  animation: slideIn 0.22s ease both;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+.header h2 {
+  font-size: 1rem;
+}
+.header span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.header button {
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  padding: 0.4rem;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.toolbar button {
+  border: 0;
+  background: none;
+  color: var(--cyan);
+  font-size: 0.72rem;
+}
+.list {
+  flex: 1;
+  overflow-y: auto;
+}
+.item {
+  display: flex;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+.item:hover {
+  background: var(--surface-2);
+}
+.unread {
+  background: rgba(34, 211, 238, 0.06);
+}
+.itemIcon {
+  color: var(--gold);
+  padding-top: 0.1rem;
+}
+.itemText {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+.itemText strong {
+  font-size: 0.83rem;
+}
+.itemText span,
+.itemText time {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.empty {
+  padding: 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.rewardPopup {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 0.75rem;
+}
+.rewardPopup > span {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  box-shadow: 0 0 24px rgba(255, 201, 60, 0.25);
+}
+.rewardPopup h3 {
+  color: var(--gold);
+  font-size: 1.4rem;
+}
+.rewardPopup p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .drawer {
+    animation-duration: 0.01ms;
+  }
+}

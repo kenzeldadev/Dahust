@@ -1,23 +1,130 @@
 /* Full-width skill progression cards. Teaches: derived progress visualization. */
-.heading { display: flex; justify-content: space-between; align-items: start }
-.intro, .help { color: var(--muted); margin: -.4rem 0 1.25rem }
-.list { display: grid; gap: .8rem }
-.skill { display: flex; align-items: center; gap: 1rem; border-left: 4px solid; padding: 1rem }
-.icon { width: 3.25rem; height: 3.25rem; flex: 0 0 3.25rem; border-radius: 12px; display: grid; place-items: center }
-.content { min-width: 0; flex: 1; display: grid; gap: .4rem }
-.name { justify-self: start; padding: 0; border: 0; background: none; color: var(--text); font-size: 1.05rem; font-weight: 700; text-align: left }
-.name:hover { color: var(--cyan) }
-.nameInput { max-width: 100%; width: min(100%, 360px) }
-.xpLine { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .8rem }
-.xpLine span:first-child, .level { color: var(--gold); font-weight: 800 }
-.progress { height: 7px; overflow: hidden; border-radius: 99px; background: var(--surface-2) }
-.progress span { display: block; height: 100%; background: var(--cyan); border-radius: inherit; transition: width .25s }
-.next { color: var(--muted); font-size: .75rem }
-.level { border: 1px solid var(--gold); border-radius: 8px; padding: .3rem .55rem; white-space: nowrap; font-size: .8rem }
-.delete { color: var(--muted); border: 0; background: none; padding: .4rem }
-.delete:hover { color: var(--red) }
-.empty { display: grid; justify-items: start; gap: 1rem; padding: 2rem 0; color: var(--muted) }
-.addBottom { margin-top: 1rem }
-.help { margin-top: 1.5rem; font-size: .8rem }
-.help a { color: var(--cyan) }
-@media (max-width: 580px) { .skill { gap: .65rem; padding: .75rem } .icon { width: 2.5rem; height: 2.5rem; flex-basis: 2.5rem } .level { font-size: .68rem; padding: .25rem } }
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.intro,
+.help {
+  color: var(--muted);
+  margin: -0.4rem 0 1.25rem;
+}
+.list {
+  display: grid;
+  gap: 0.8rem;
+}
+.skill {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-left: 4px solid;
+  padding: 1rem;
+}
+.icon {
+  width: 3.25rem;
+  height: 3.25rem;
+  flex: 0 0 3.25rem;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+}
+.content {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 0.4rem;
+}
+.name {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: left;
+}
+.name:hover {
+  color: var(--cyan);
+}
+.nameInput {
+  max-width: 100%;
+  width: min(100%, 360px);
+}
+.xpLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.xpLine span:first-child,
+.level {
+  color: var(--gold);
+  font-weight: 800;
+}
+.progress {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--surface-2);
+}
+.progress span {
+  display: block;
+  height: 100%;
+  background: var(--cyan);
+  border-radius: inherit;
+  transition: width 0.25s;
+}
+.next {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.level {
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 0.3rem 0.55rem;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+.delete {
+  color: var(--muted);
+  border: 0;
+  background: none;
+  padding: 0.4rem;
+}
+.delete:hover {
+  color: var(--red);
+}
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: var(--muted);
+}
+.addBottom {
+  margin-top: 1rem;
+}
+.help {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+}
+.help a {
+  color: var(--cyan);
+}
+@media (max-width: 580px) {
+  .skill {
+    gap: 0.65rem;
+    padding: 0.75rem;
+  }
+  .icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-basis: 2.5rem;
+  }
+  .level {
+    font-size: 0.68rem;
+    padding: 0.25rem;
+  }
+}

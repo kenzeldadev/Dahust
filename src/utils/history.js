@@ -1,1 +1,1 @@
-export const isCompletedHistoryEntry = entry => entry.status !== 'missed';
+export const isCompletedHistoryEntry = (entry) => entry.status !== 'missed';

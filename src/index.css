@@ -1,82 +1,93 @@
 /* Design tokens + resets. Teaches: global CSS variables. */
 :root {
-    --bg: #0a0e1a;
-    --surface: #131829;
-    --surface-2: #1c2238;
-    --border: #2a3350;
-    --gold: #ffc93c;
-    --cyan: #22d3ee;
-    --orange: #fb923c;
-    --green: #4ade80;
-    --purple: #a78bfa;
-    --red: #f87171;
-    --text: #f1f5f9;
-    --muted: #94a3b8
+  --bg: #0a0e1a;
+  --surface: #131829;
+  --surface-2: #1c2238;
+  --border: #2a3350;
+  --gold: #ffc93c;
+  --cyan: #22d3ee;
+  --orange: #fb923c;
+  --green: #4ade80;
+  --purple: #a78bfa;
+  --red: #f87171;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: Inter, system-ui, sans-serif;
-    color: var(--text);
-    min-height: 100vh;
-    background:
-        radial-gradient(ellipse at 12% 0, rgba(34, 211, 238, .12), transparent 42%),
-        radial-gradient(ellipse at 90% 20%, rgba(167, 139, 250, .07), transparent 38%),
-        var(--bg);
-    overflow-x: hidden
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      ellipse at 12% 0,
+      rgba(34, 211, 238, 0.12),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 90% 20%,
+      rgba(167, 139, 250, 0.07),
+      transparent 38%
+    ),
+    var(--bg);
+  overflow-x: hidden;
 }
 
 button,
 input,
 select,
 textarea {
-    font: inherit;
-    color: inherit
+  font: inherit;
+  color: inherit;
 }
 
 button {
-    cursor: pointer
+  cursor: pointer;
 }
 
 .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.25rem;
-    transition: transform .2s, border-color .2s, box-shadow .2s
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    border-color: var(--cyan);
-    box-shadow: 0 0 18px rgba(34, 211, 238, .18)
+  transform: translateY(-2px);
+  border-color: var(--cyan);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.18);
 }
 
 .section-title {
-    text-transform: uppercase;
-    font-size: .75rem;
-    letter-spacing: .15em;
-    color: var(--muted);
-    margin-bottom: 1rem
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin-bottom: 1rem;
 }
 
 .input {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: .5rem .75rem
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
 }
 
 .btn {
-    background: var(--cyan);
-    color: #06222a;
-    border: 0;
-    border-radius: 8px;
-    padding: .5rem 1rem;
-    font-weight: 600
+  background: var(--cyan);
+  color: #06222a;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
 }

@@ -1,28 +1,101 @@
 /* Responsive quest list row. Teaches: flexible layout and state styles. */
-.row { display: flex; align-items: center; gap: .8rem; margin-bottom: .55rem; padding: .8rem 1rem; min-width: 0 }
-.missed { border-color: rgba(251, 146, 60, .55) }
-.makeup { color: var(--orange); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em }
-.check { display: grid; place-items: center }
-.check input { width: 1.05rem; height: 1.05rem; accent-color: var(--cyan) }
-.title { flex: 1; min-width: 100px }
-.done { color: var(--muted); text-decoration: line-through }
-.skill { font-size: .85rem }
-.pill { border: 1px solid var(--border); background: var(--surface-2); border-radius: 99px; padding: .2rem .65rem; font-size: .75rem }
-.xp { color: var(--gold); white-space: nowrap; font-size: .85rem }
-.delete { display: grid; place-items: center; border: 0; background: none; color: var(--muted); padding: .25rem }
-.delete:hover { color: var(--red) }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.55rem;
+  padding: 0.8rem 1rem;
+  min-width: 0;
+}
+.missed {
+  border-color: rgba(251, 146, 60, 0.55);
+}
+.makeup {
+  color: var(--orange);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.check {
+  display: grid;
+  place-items: center;
+}
+.check input {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--cyan);
+}
+.title {
+  flex: 1;
+  min-width: 100px;
+}
+.done {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.skill {
+  font-size: 0.85rem;
+}
+.pill {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 99px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+}
+.xp {
+  color: var(--gold);
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+.delete {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  padding: 0.25rem;
+}
+.delete:hover {
+  color: var(--red);
+}
 @media (max-width: 640px) {
-    .row { flex-wrap: wrap; gap: .55rem .7rem; padding: .8rem }
-    .title { flex-basis: calc(100% - 2.5rem); min-width: 0 }
-    .skill { margin-left: 1.7rem; flex: 1 1 auto }
-    .makeup { margin-left: 1.7rem }
-    .pill { margin-left: 1.7rem }
-    .xp { margin-left: auto }
-    .delete { margin-left: auto }
+  .row {
+    flex-wrap: wrap;
+    gap: 0.55rem 0.7rem;
+    padding: 0.8rem;
+  }
+  .title {
+    flex-basis: calc(100% - 2.5rem);
+    min-width: 0;
+  }
+  .skill {
+    margin-left: 1.7rem;
+    flex: 1 1 auto;
+  }
+  .makeup {
+    margin-left: 1.7rem;
+  }
+  .pill {
+    margin-left: 1.7rem;
+  }
+  .xp {
+    margin-left: auto;
+  }
+  .delete {
+    margin-left: auto;
+  }
 }
 
 @media (max-width: 380px) {
-    .row { gap: .5rem }
-    .skill { font-size: .78rem }
-    .pill { padding: .18rem .5rem }
+  .row {
+    gap: 0.5rem;
+  }
+  .skill {
+    font-size: 0.78rem;
+  }
+  .pill {
+    padding: 0.18rem 0.5rem;
+  }
 }

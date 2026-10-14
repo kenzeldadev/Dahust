@@ -1,9 +1,9 @@
 .main {
-    width: min(100%, 1200px);
-    margin: 0 auto;
-    padding: clamp(1.25rem, 4vw, 3rem) clamp(.85rem, 4vw, 1.5rem);
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 5vw, 3rem);
-    min-width: 0
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 3rem) clamp(0.85rem, 4vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 5vw, 3rem);
+  min-width: 0;
 }

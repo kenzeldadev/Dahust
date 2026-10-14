@@ -9,12 +9,16 @@ import Achievements from './pages/Achievements.jsx';
 import Stats from './pages/Stats.jsx';
 
 export default function App() {
-    return <Routes><Route element={<Layout />}>
+  return (
+    <Routes>
+      <Route element={<Layout />}>
         <Route index element={<Profile />} />
         <Route path="history" element={<History />} />
         <Route path="skills" element={<Skills />} />
         <Route path="skills/:id" element={<SkillDetail />} />
         <Route path="achievements" element={<Achievements />} />
         <Route path="stats" element={<Stats />} />
-    </Route></Routes>
+      </Route>
+    </Routes>
+  );
 }
